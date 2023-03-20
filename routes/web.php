@@ -1,10 +1,19 @@
 <?php
-
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserSearch;
-use App\Http\Controllers\DataScrape;
+//____Default
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Route;
+
+//___Usage controller
+use App\Http\Controllers\UserSearch;
+use App\Http\Controllers\DataScrape;
+use App\Http\Controllers\Test\TestController;
+
+
+
+//___Get audio from the website controllers
+use App\Http\Controllers\GetAudio\WebsiteOne;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -60,12 +69,18 @@ Route::get('audio/search/{data}', function($data) {
 Route::get('scrape', [DataScrape::class, 'scrape'])->name('scrape.data');
 
 
-//_____Testing jQuery get API
-Route::get('data')->name('get.data')->middleware(['tempValidUser']);
-
-
-
 //____This is for one time user browser verification
 Route::get('index/home', function() {
     return redirect()->route('home.page');
 })->name('check.AuthBrowser')->middleware(['authBrowser']);
+
+
+
+//_____Get API with encryption data
+Route::get('data/{searchQuery}',[WebsiteOne::class, 'FirstWebsite'])->name('get.data')->middleware(['tempValidUser','authBrowser']);
+
+//_____Get API with decryption data 
+Route::get('audio/search/{encryptedData}/result',[WebsiteOne::class, 'DecryptAudioListData'])->name('decryptAudio.list')->middleware(['tempValidUser']);
+
+//____Deleting user search session
+Route::get('audio/get/{encryptedData}/data',[WebsiteOne::class, 'EndTheDecryptAudioListDataSession'])->name('endSession.decryptAudio.list')->middleware(['tempValidUser']);

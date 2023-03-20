@@ -16,25 +16,52 @@ class AuthBrowserCheck
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if($request->header('Encrypt-id') && $request->header('Auth-temp-user') ) {
-
-            $encryptId = $request->header('Encrypt-id');
-            $authTempUser = $request->header('Auth-temp-user');
-        
-            $currentUser = Cookie::get('_RAND_ID');
-        
-            if(decrypt($encryptId) == $currentUser) {
-                $cookie = cookie('_AUTH_', 'accessable_brower', 10080); //___ setting _AUTH_ cookie for 7 days.
-        
-                return $next($request)->withCookie($cookie);
-            }
+        if(request()->hasCookie('_RAND_ID')) {
+            if ($request->route()->hasParameter('searchQuery')) {
+                if($request->header('Encrypt-id') && $request->header('Auth-temp-user') ) {
+    
+                    $encryptId = $request->header('Encrypt-id');
+                    $authTempUser = $request->header('Auth-temp-user');
+                
+                    $currentUser = Cookie::get('_RAND_ID');
+                
+                    if(decrypt($encryptId) == $currentUser) {
+                        $cookie = cookie('_AUTH_', 'accessable_brower', 10080); //___ setting _AUTH_ cookie for 7 days.
+                
+                        return $next($request)->withCookie($cookie);
+                    }
+                    else {
+                    return redirect()-> route('home.page');
+                    }
+                
+                }
+                else {
+                    return redirect()-> route('home.page');
+                }
+            }  
             else {
-            return redirect()-> route('home.page');
+                if($request->header('Encrypt-id') && $request->header('Auth-temp-user') ) {
+    
+                    $encryptId = $request->header('Encrypt-id');
+                    $authTempUser = $request->header('Auth-temp-user');
+                
+                    $currentUser = Cookie::get('_RAND_ID');
+                
+                    if(decrypt($encryptId) == $currentUser) {
+                        $cookie = cookie('_AUTH_', 'accessable_brower', 10080); //___ setting _AUTH_ cookie for 7 days.
+                
+                        return $next($request)->withCookie($cookie);
+                    }
+                    else {
+                    return redirect()-> route('home.page');
+                    }
+                
+                }
+                else {
+                    return redirect()-> route('home.page');
+                }
             }
-        
         }
-        else {
-            return redirect()-> route('home.page');
-        }
+
     }    
 }

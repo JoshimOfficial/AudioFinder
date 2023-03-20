@@ -41,28 +41,29 @@ if (document.querySelector("#light_mode")) {
 //This is for Auth
 
 const arr = [
-    "Absolutely, no doubt about it. 👍",
-    "Yes, that's correct. ✅",
-    "Of course, it's authentic. 🔒",
-    "Certainly, it's a genuine browser. 🌐",
-    "Definitely, it's trustworthy. 🙌",
-    "Why wouldn't it be? You can trust it. 🤝",
-    "Yes, I've confirmed it's legitimate. 🆗",
-    "Yes, I can assure you it's the real deal. 💯",
-    "Without a doubt, it's an authentic browser. 🛡️",
-    "Yes, I've reviewed it and it's a trustworthy browser. 👍",
-    "Yes, I've checked and determined that it's authentic. 🔍",
-    "Yes, I've examined it and it's a reliable browser. 👀",
-    "Yes, I've double-checked and it's definitely authentic. ✅",
-    "Yes, it's a verified and trustworthy browser. ✅",
-    "Yes, it's a reputable and reliable browser. 👌",
-    "Yes, I'm confident it's a genuine and secure browser. 🔒",
-    "Yes, I'm positive it's a legitimate and safe browser. 👍",
-    "Yes, I'm certain it's an authentic and trustworthy browser. 🛡️",
-    "Yes, I've conducted a thorough analysis and it's an authentic browser. 🔍",
-    "Yes, I've scrutinized it and can confirm that it's a secure and reliable browser. 🔒",
-    "Yes, after a detailed examination, I can confidently say that it's an authentic browser. 👍"
+    "=> Absolutely, no doubt about it. 👍",
+    "=> Yes, that's correct. ✅",
+    "=> Of course, it's authentic. 🔒",
+    "=> Certainly, it's a genuine browser. 🌐",
+    "=> Definitely, it's trustworthy. 🙌",
+    "=> Why wouldn't it be? You can trust it. 🤝",
+    "=> Yes, I've confirmed it's legitimate. 🆗",
+    "=> Yes, I can assure you it's the real deal. 💯",
+    "=> Without a doubt, it's an authentic browser. 🛡️",
+    "=> Yes, I've reviewed it and it's a trustworthy browser. 👍",
+    "=> Yes, I've checked and determined that it's authentic. 🔍",
+    "=> Yes, I've examined it and it's a reliable browser. 👀",
+    "=> Yes, I've double-checked and it's definitely authentic. ✅",
+    "=> Yes, it's a verified and trustworthy browser. ✅",
+    "=> Yes, it's a reputable and reliable browser. 👌",
+    "=> Yes, I'm confident it's a genuine and secure browser. 🔒",
+    "=> Yes, I'm positive it's a legitimate and safe browser. 👍",
+    "=> Yes, I'm certain it's an authentic and trustworthy browser. 🛡️",
+    "=> Yes, I've conducted a thorough analysis and it's an authentic browser. 🔍",
+    "=> Yes, I've scrutinized it and can confirm that it's a secure and reliable browser. 🔒",
+    "=> Yes, after a detailed examination, I can confidently say that it's an authentic browser. 👍"
 ];
+
 
 
 const arrFirstAsk = [
@@ -123,4 +124,74 @@ function accessControl(arr) {
 function accessControl(arrFirstAsk) {
     let rand = Math.floor(Math.random() * arrFirstAsk.length);
     return arrFirstAsk[rand];
+}
+
+function ShowLog(arrFirstAsk){
+    console.log('Is this an authentic browser?');
+    console.log(accessControl(arrFirstAsk));
+    location.reload();
+}
+
+function ShowLogVerify(arr) {
+    console.log('Is this an authentic browser?');
+    console.log(accessControl(arr));
+}
+
+
+function startTable(data,id,hiddenClassId){
+    for(i = 0; i < data['tracks'].length; i++) {
+
+        document.querySelector(id).innerHTML += `
+
+        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 grid grid-cols-1 md:grid-cols-3 items-center  md:text-center">
+                <th scope="row" class="px-2 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white w-full flex justify-center">
+                    <audio controls class="w-60 lg:w-full">
+                        <source src="${data['tracks'][i]['preview']}" type="audio/mpeg">
+                      Your browser does not support the audio element.
+                      </audio>
+                </th>
+                <td class="px-6 py-2 md:py-4 text-center">
+                    ${data['tracks'][i]['name']}
+                </td>
+                <td class="px-6 pb-3 md:py-4 text-center">
+                        <span class="md:hidden mr-2">Link:</span>
+                        <a href="${data['tracks'][i]['preview']}" class="text-blue-500 underline">Download</a>
+                </td>
+            </tr>
+
+
+        `;
+    }
+    $(hiddenClassId).removeClass('hidden');
+}
+
+
+
+
+function AuthTableData(url,encriptionId,) {
+
+    $.ajax({
+        url: url,
+        headers: {
+        'Encrypt-id': encriptionId,
+        'Auth-temp-user': 'true'
+        },
+        success: function(data) {
+        console.log(data);
+        
+        if(data['total'] > 0) {
+        
+            startTable(data,'#firstTbody','#firstDataTable')
+            
+        }
+        else {
+            console.log("This content less then 0");
+        }
+        },
+        error: function(xhr, status, error) {
+        console.log(error);
+        }
+        });
+
+
 }
