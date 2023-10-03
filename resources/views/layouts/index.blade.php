@@ -3,7 +3,6 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        @vite(['resources/css/app.css','resources/js/app.js'])
         <title>@yield('af.title')</title>
         <link rel="shortcut icon" href="{{ asset('assets/imgs/logo_fav/fav.svg') }}" type="image/x-icon">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
