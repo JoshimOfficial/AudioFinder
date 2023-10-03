@@ -1,5 +1,7 @@
 <?php
 //____Default
+
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
@@ -8,7 +10,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserSearch;
 use App\Http\Controllers\DataScrape;
 use App\Http\Controllers\Test\TestController;
-
 
 
 //___Get audio from the website controllers
@@ -28,24 +29,10 @@ use App\Http\Controllers\GetAudio\WebsiteOne;
 
 
 //___Default when user visits on website homepage it will create a random ID.
-Route::get('/',function() {
+// Route::get('/',function() {
+// })-> name('home.page');
 
-    // check if the _RAND_ID cookie already exists
-    $rand_id = request()->cookie('_RAND_ID');
-
-    // if the _RAND_ID cookie doesn't exist, generate a new one
-    if (!$rand_id) {
-        $rand_id = strval(mt_rand(1, 999999999999999));
-    }
-
-    // set the cookie with the random number and a 1 minute expiration time
-    return response()
-        ->view('welcome')
-        ->cookie('_RAND_ID', $rand_id, 5);
-
-
-}) -> name('home.page');
-
+Route::get('/',[AdminController::class, 'GetAPI']);
 
 
 
