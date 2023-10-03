@@ -77,10 +77,14 @@ Route::get('index/home', function() {
 
 
 //_____Get API with encryption data
-Route::get('data/{searchQuery}',[WebsiteOne::class, 'FirstWebsite'])->name('get.data')->middleware(['tempValidUser','authBrowser']);
+Route::get('data/{searchQuery}/{page}',[WebsiteOne::class, 'FirstWebsite'])->name('get.data')->middleware(['tempValidUser','authBrowser']);
 
 //_____Get API with decryption data 
-Route::get('audio/search/{encryptedData}/result',[WebsiteOne::class, 'DecryptAudioListData'])->name('decryptAudio.list')->middleware(['tempValidUser']);
+Route::get('audio/search/{encryptedData}/{page}/result',[WebsiteOne::class, 'DecryptAudioListData'])->name('decryptAudio.list')->middleware(['tempValidUser']);
 
 //____Deleting user search session
-Route::get('audio/get/{encryptedData}/data',[WebsiteOne::class, 'EndTheDecryptAudioListDataSession'])->name('endSession.decryptAudio.list')->middleware(['tempValidUser']);
+Route::get('audio/get/{encryptedData}/{page}/data',[WebsiteOne::class, 'EndTheDecryptAudioListDataSession'])->name('endSession.decryptAudio.list')->middleware(['tempValidUser']);
+
+
+//_____Testing on search
+Route::get('/test/{query}',[TestController::class, 'testSearch']);

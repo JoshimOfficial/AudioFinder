@@ -27,7 +27,7 @@ if (authVerify == 1) {
         ShowLog(arrFirstAsk)
         },
         error: function(xhr, status, error) {
-            // Handle error
+            
         }
     });
 

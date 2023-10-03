@@ -29,7 +29,6 @@ return [
     */
 
     'env' => env('APP_ENV', 'production'),
-
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
@@ -41,7 +40,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool) env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -57,6 +56,8 @@ return [
     'url' => env('APP_URL', 'http://localhost'),
 
     'asset_url' => env('ASSET_URL'),
+
+    'key' => env('APP_KEY', 'base64:ySjy2zTqyR+pOgJUA8x9mBc+AXxUr/+G2l6FJbWFrR8='),
 
     /*
     |--------------------------------------------------------------------------

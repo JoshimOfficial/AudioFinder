@@ -1,9 +1,7 @@
 module.exports = {
   content: [
-    "./resources/**/*.blade.php",
-    "./resources/**/*.js",
-    "./resources/**/*.vue",
-    "./node_modules/flowbite/**/*.js"
+    './resources/views/**/*.blade.php',
+    './resources/js/**/*.vue',
   ],
   theme: {
     extend: {

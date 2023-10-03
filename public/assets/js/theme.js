@@ -138,7 +138,7 @@ function ShowLogVerify(arr) {
 }
 
 
-function startTable(data,id,hiddenClassId){
+function startTable(data,id,hiddenClassId,musicStoreHeader,removemusicStoreHeader,tableSkleton){
     for(i = 0; i < data['tracks'].length; i++) {
 
         document.querySelector(id).innerHTML += `
@@ -162,7 +162,14 @@ function startTable(data,id,hiddenClassId){
 
         `;
     }
+
+
     $(hiddenClassId).removeClass('hidden');
+    $(musicStoreHeader).removeClass('hidden');
+    $(removemusicStoreHeader).addClass('hidden');
+    $(tableSkleton).addClass('hidden');
+
+
 }
 
 
