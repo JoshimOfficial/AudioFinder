@@ -39,8 +39,16 @@ class AdminController extends Controller
         if (preg_match($pattern, $data, $matches)) {
             $postBodyContent = $matches[1]; // The content inside the <div> with id="postBody"
 
-            // Return the content as JSON response
-            return response()->json(['message' => $postBodyContent]);
+            $mainData = $postBodyContent;
+            $mainData = str_replace("\n", "", $postBodyContent);
+
+            $mainData = preg_replace('/<p[^>]*>/', '', $mainData);
+            $mainData = str_replace('</p>', '', $mainData);
+            $mainData = str_replace('&nbsp;', '', $mainData);
+            $mainData = str_replace('    ', '', $mainData);
+            $decodedData = json_decode(stripslashes($mainData));
+
+            return response()->json(['message' => $decodedData]);
         } else {
             // Handle the case where no matching <div id="postBody"> is found.
             return response()->json(['message' => 'No matching <div id="postBody"> found.']);
