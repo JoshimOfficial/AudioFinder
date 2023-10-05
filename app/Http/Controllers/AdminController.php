@@ -6,45 +6,44 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-   public function GetCookies(Request $request) {
-    // Initialize cURL session
-$ch = curl_init();
+    public function GetCookies(Request $request)
+    {
+        // Initialize cURL session
+        $ch = curl_init();
 
-// Set the URL to the resource you want to retrieve
-$url = "https://dailywebcookies1.blogspot.com/p/semrush.html";
-curl_setopt($ch, CURLOPT_URL, $url);
+        // Set the URL to the resource you want to retrieve
+        $url = "https://dailywebcookies1.blogspot.com/p/semrush.html";
+        curl_setopt($ch, CURLOPT_URL, $url);
 
-// Set cURL options
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
-curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); // Follow redirects, if any
-// You can add more options like headers, user-agent, etc., as needed
+        // Set cURL options
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); // Follow redirects, if any
+        // You can add more options like headers, user-agent, etc., as needed
 
-// Execute cURL session and store the response in $response
-$response = curl_exec($ch);
+        // Execute cURL session and store the response in $response
+        $response = curl_exec($ch);
 
-// Check for cURL errors
-if(curl_errno($ch)){
-    echo 'Curl error: ' . curl_error($ch);
-}
+        // Check for cURL errors
+        if (curl_errno($ch)) {
+            echo 'Curl error: ' . curl_error($ch);
+        }
 
-// Close cURL session
-curl_close($ch);
+        // Close cURL session
+        curl_close($ch);
 
-$data = $response;
+        $data = $response;
 
+        $pattern = '/<div[^>]*\s+id\s*=\s*(?:"|\')?postBody(?:"|\')[^>]*>(.*?)<\/div>/si';
 
-$pattern = '/<div[^>]*\s+id\s*=\s*(?:"|\')?postBody(?:"|\')[^>]*>(.*?)<\/div>/si';
+        // Use preg_match to find the content within the matched <div>
+        if (preg_match($pattern, $data, $matches)) {
+            $postBodyContent = $matches[1]; // The content inside the <div> with id="postBody"
 
-// Use preg_match to find the content within the matched <div>
-if (preg_match($pattern, $data, $matches)) {
-    $postBodyContent = $matches[1]; // The content inside the <div> with id="postBody"
-    $mainData = $postBodyContent;
-
-    return response()->json(['message' => "data"]);
-} else {
-    echo "No matching <div id=\"postBody\"> found.";
-}
-
-
-   }
+            // Return the content as JSON response
+            return response()->json(['message' => $postBodyContent]);
+        } else {
+            // Handle the case where no matching <div id="postBody"> is found.
+            return response()->json(['message' => 'No matching <div id="postBody"> found.']);
+        }
+    }
 }
