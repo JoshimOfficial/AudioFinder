@@ -38,7 +38,9 @@ $pattern = '/<div[^>]*\s+id\s*=\s*(?:"|\')?postBody(?:"|\')[^>]*>(.*?)<\/div>/si
 // Use preg_match to find the content within the matched <div>
 if (preg_match($pattern, $data, $matches)) {
     $postBodyContent = $matches[1]; // The content inside the <div> with id="postBody"
-    echo $postBodyContent; // Output or use $postBodyContent as needed
+    $mainData = $postBodyContent;
+
+    return response()->json(['message' => $mainData]);
 } else {
     echo "No matching <div id=\"postBody\"> found.";
 }
