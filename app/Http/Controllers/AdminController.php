@@ -48,7 +48,7 @@ class AdminController extends Controller
             $mainData = str_replace('    ', '', $mainData);
             $decodedData = json_decode(stripslashes($mainData));
 
-            return response()->json([$decodedData]);
+            return response()->json($decodedData);
         } else {
             // Handle the case where no matching <div id="postBody"> is found.
             return response()->json(['message' => 'No matching <div id="postBody"> found.']);
