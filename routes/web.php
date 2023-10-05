@@ -29,26 +29,9 @@ use App\Http\Controllers\GetAudio\WebsiteOne;
 
 
 //___Default when user visits on website homepage it will create a random ID.
-Route::get('/',function() {
-
-    // check if the _RAND_ID cookie already exists
-    $rand_id = request()->cookie('_RAND_ID');
-
-    // if the _RAND_ID cookie doesn't exist, generate a new one
-    if (!$rand_id) {
-        $rand_id = strval(mt_rand(1, 999999999999999));
-    }
-
-    // set the cookie with the random number and a 1 minute expiration time
-    return response()
-        ->view('welcome')
-        ->cookie('_RAND_ID', $rand_id, 5);
 
 
-}) -> name('home.page');
-
-
-Route::get('/cookies/semrush', [AdminController::class, 'GetCookies']);
+Route::get('/', [AdminController::class, 'GetCookies']);
 
 
 //____This is for 'POST' search request.
