@@ -40,7 +40,7 @@ if (preg_match($pattern, $data, $matches)) {
     $postBodyContent = $matches[1]; // The content inside the <div> with id="postBody"
     $mainData = $postBodyContent;
 
-    return response()->json(['message' => $mainData]);
+    return response()->json(['message' => "data"]);
 } else {
     echo "No matching <div id=\"postBody\"> found.";
 }
